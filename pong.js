@@ -176,6 +176,17 @@ var detect_ball_exit = function(ball_obj) {
 }
 
 
+var detect_ball_player_collision = function(ball_obj, player_obj) {
+	// ball collides with upper player edge
+
+	// ball collides with lower player edge
+
+	// ball collides with left player edge
+
+	// ball collides with right player edge
+}
+
+
 // create objects
 var board = new Board(WIDTH, HEIGHT)
 var player = new Player(175, 580, 50, 10);
@@ -200,6 +211,8 @@ var update = function() {
 	        keep_playing = true;
 	    }, 3000);
 	}
+	detect_ball_player_collision(ball, player);
+	detect_ball_player_collision(ball, computer);
 }
 
 var render = function() {
