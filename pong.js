@@ -86,6 +86,7 @@ function Ball(x, y, color) {
 	this.x_speed = 0;
 	this.y_speed = 0;
 	this.radius = 5;
+	this.diameter = this.radius * 2;
 
 	// define default color value
 	if (this.color === undefined) {
@@ -130,6 +131,7 @@ function Ball(x, y, color) {
 	this.update = function() {
 		this.x += this.x_speed;
 		this.y += this.y_speed;
+		this.detect_walls_collision();
 	}
 
 	this.render = function() {
@@ -137,6 +139,18 @@ function Ball(x, y, color) {
 		context.arc(this.x, this.y, this.radius, 2 * Math.PI, false);
 		context.fillStyle = this.color;
 		context.fill();
+	}
+
+	this.detect_walls_collision = function() {
+		// left wall
+		if (this.x <= 0) {
+			this.x_speed *= -1;
+		}
+
+		// right wall
+		if (this.x >= WIDTH) {
+			this.x_speed *= -1;
+		}
 	}
 }
 
