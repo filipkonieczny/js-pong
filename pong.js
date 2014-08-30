@@ -168,19 +168,20 @@ var detect_ball_exit = function(ball_obj) {
 
 
 var detect_ball_player_collision = function(ball_obj, player_obj) {
-	// ball collides with vertical player edge
-
-	// ball collides with horizontal player edge
+	if (ball_obj.y + ball_obj.diameter >= player_obj.y && ball_obj.y <= player_obj.y + player_obj.h && ball_obj.x + ball_obj.diameter >= player_obj.x && ball_obj.x <= player_obj.x + player_obj.w) {
+		ball_obj.y_speed += player_obj.paddle.x_speed * 0.1;
+		ball_obj.y_speed *= -1;
+	}
 }
 
 
 // create objects
 var board = new Board(WIDTH, HEIGHT)
-var player = new Player(175, 580, 50, 10);
-var computer = new Player(175, 10, 50, 10);
+var player = new Player(50, 580, 300, 200);
+var computer = new Player(50, 10, 300, 200);
 var ball = new Ball(200, 300);
-
 ball.spawn();
+
 var keep_playing = true;
 
 
