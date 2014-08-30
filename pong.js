@@ -74,6 +74,24 @@ function Paddle(x, y, w, h, color) {
 		context.fillStyle = this.color;
 		context.fillRect(this.x, this.y, this.w, this.h);
 	}
+
+	this.move = function(x, y) {
+		this.x += x;
+		this.y += y;
+		this.x_speed = x;
+		this.y_speed = y;
+
+		// all the way to the left
+		if(this.x < 0) {
+			this.x = 0;
+			this.x_speed = 0;
+
+		// all the way to the right
+		} else if (this.x + this.w > WIDTH) {
+			this.x = WIDTH - this.w;
+			this.x_speed = 0;
+		}
+	}
 }
 
 
@@ -87,6 +105,24 @@ function Player(x, y, w, h) {
 
 	this.render = function() {
 		this.paddle.render();
+	}
+
+	this.update = function() {
+		for (var key in keysDown) {
+		    var value = Number(key);
+		    // left arrow
+		    if (value == 37) {
+		    	this.paddle.move(-4, 0);
+		    // right arrow
+		    } else if (value == 39) {
+		    	this.paddle.move(4, 0);
+		    } else {
+		    	this.paddle.move(0, 0);
+		    }
+		}
+
+		this.x = this.paddle.x;
+		this.y = this.paddle.y;
 	}
 }
 
@@ -181,7 +217,7 @@ var detect_ball_exit = function(ball_obj) {
 
 var detect_ball_player_collision = function(ball_obj, player_obj) {
 	if (ball_obj.y + ball_obj.diameter >= player_obj.y && ball_obj.y <= player_obj.y + player_obj.h && ball_obj.x + ball_obj.diameter >= player_obj.x && ball_obj.x <= player_obj.x + player_obj.w) {
-		ball_obj.y_speed += player_obj.paddle.x_speed * 0.1;
+		ball_obj.y_speed += Math.abs(player_obj.paddle.x_speed) * 0.2;
 		ball_obj.y_speed *= -1;
 	}
 }
@@ -189,8 +225,8 @@ var detect_ball_player_collision = function(ball_obj, player_obj) {
 
 // create objects
 var board = new Board(WIDTH, HEIGHT)
-var player = new Player(50, 580, 300, 200);
-var computer = new Player(50, 10, 300, 200);
+var player = new Player(175, 580, 100, 10);
+var computer = new Player(175, 10, 100, 10);
 var ball = new Ball(200, 300);
 ball.spawn();
 
@@ -211,6 +247,7 @@ var update = function() {
 	}
 	detect_ball_player_collision(ball, player);
 	detect_ball_player_collision(ball, computer);
+	player.update();
 }
 
 var render = function() {
