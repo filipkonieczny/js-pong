@@ -152,6 +152,11 @@ function Ball(x, y, color) {
 			this.x_speed *= -1;
 		}
 	}
+
+	// this.stop = function() {
+	// 	this.x_speed = 0;
+	// 	this.y_speed = 0;
+	// }
 }
 
 
@@ -162,7 +167,7 @@ var detect_ball_exit = function(ball_obj) {
 		return true;
 	}
 	// lower exit
-	else if (ball_obj.y + ball_obj.h >= HEIGHT) {
+	else if (ball_obj.y + ball_obj.diameter >= HEIGHT) {
 		return true;
 	}
 	else {
@@ -184,7 +189,8 @@ ball.spawn();
 var update = function() {
 	ball.update();
 	if (detect_ball_exit(ball)) {
-		console.log('win!')
+		console.log('win!');
+		// ball.stop();
 		setTimeout(function(){ 
 	        console.log('wat');
 	    }, 3000);  
