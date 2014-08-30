@@ -153,10 +153,10 @@ function Ball(x, y, color) {
 		}
 	}
 
-	// this.stop = function() {
-	// 	this.x_speed = 0;
-	// 	this.y_speed = 0;
-	// }
+	this.stop = function() {
+		this.x_speed = 0;
+		this.y_speed = 0;
+	}
 }
 
 
@@ -183,17 +183,22 @@ var computer = new Player(175, 10, 50, 10);
 var ball = new Ball(200, 300);
 
 ball.spawn();
+keep_playing = true;
 
 
 // main functions
 var update = function() {
 	ball.update();
-	if (detect_ball_exit(ball)) {
+	if (detect_ball_exit(ball) && keep_playing) {
 		console.log('win!');
-		// ball.stop();
-		setTimeout(function(){ 
+		keep_playing = false;
+		setTimeout(function() { 
 	        console.log('wat');
-	    }, 3000);  
+	        delete ball;
+	        ball = new Ball(200, 300);
+	        ball.spawn();
+	        keep_playing = true;
+	    }, 3000);
 	}
 }
 
