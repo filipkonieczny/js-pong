@@ -24,6 +24,18 @@ window.onload = function() {
 };
 
 
+// get user input
+var keysDown = {};
+
+window.addEventListener("keydown", function(event) {
+	keysDown[event.keyCode] = true;
+});
+
+window.addEventListener("keyup", function(event) {
+	delete keysDown[event.keyCode];
+});
+
+
 // define moveable objects
 function Board(w, h, color) {
 	this.w = w;
