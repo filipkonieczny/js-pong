@@ -24,7 +24,7 @@ window.onload = function() {
 };
 
 
-// define 
+// define moveable objects
 function Board(w, h, color) {
 	this.w = w;
 	this.h = h;
@@ -116,15 +116,6 @@ function Ball(x, y, color) {
 
 		this.x_speed = angle * MAX_BALL_SPEED * horizontal_direction;
 		this.y_speed = Math.pow(Math.pow(MAX_BALL_SPEED, 2) - Math.pow(this.x_speed, 2), 1/2) * vertical_direction;
-
-
-		// LOG
-		console.log("x speed: %s", this.x_speed);
-		console.log("y speed: %s", this.y_speed);
-		total_speed = Math.abs(this.x_speed) + Math.abs(this.y_speed);
-		console.log("total speed: %s", total_speed);
-		actual_speed = Math.pow(Math.pow(this.x_speed, 2) + Math.pow(this.y_speed, 2), 1/2);
-		console.log("speed - max defined: %s, actual: %s", MAX_BALL_SPEED, actual_speed);
 	}
 
 
@@ -160,7 +151,7 @@ function Ball(x, y, color) {
 }
 
 
-//
+// functions
 var detect_ball_exit = function(ball_obj) {
 	// upper exit
 	if (ball_obj.y <= 0) {
@@ -177,13 +168,9 @@ var detect_ball_exit = function(ball_obj) {
 
 
 var detect_ball_player_collision = function(ball_obj, player_obj) {
-	// ball collides with upper player edge
+	// ball collides with vertical player edge
 
-	// ball collides with lower player edge
-
-	// ball collides with left player edge
-
-	// ball collides with right player edge
+	// ball collides with horizontal player edge
 }
 
 
@@ -194,17 +181,15 @@ var computer = new Player(175, 10, 50, 10);
 var ball = new Ball(200, 300);
 
 ball.spawn();
-keep_playing = true;
+var keep_playing = true;
 
 
 // main functions
 var update = function() {
 	ball.update();
 	if (detect_ball_exit(ball) && keep_playing) {
-		console.log('win!');
 		keep_playing = false;
 		setTimeout(function() { 
-	        console.log('wat');
 	        delete ball;
 	        ball = new Ball(200, 300);
 	        ball.spawn();
