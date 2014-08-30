@@ -148,9 +148,25 @@ function Ball(x, y, color) {
 		}
 
 		// right wall
-		if (this.x + this.w >= WIDTH) {
+		if (this.x + this.diameter >= WIDTH) {
 			this.x_speed *= -1;
 		}
+	}
+}
+
+
+//
+var detect_ball_exit = function(ball_obj) {
+	// upper exit
+	if (ball_obj.y <= 0) {
+		return true;
+	}
+	// lower exit
+	else if (ball_obj.y + ball_obj.h >= HEIGHT) {
+		return true;
+	}
+	else {
+		return false;
 	}
 }
 
@@ -167,6 +183,12 @@ ball.spawn();
 // main functions
 var update = function() {
 	ball.update();
+	if (detect_ball_exit(ball)) {
+		console.log('win!')
+		setTimeout(function(){ 
+	        console.log('wat');
+	    }, 3000);  
+	}
 }
 
 var render = function() {
