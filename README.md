@@ -1,4 +1,4 @@
-js-pong
+JavaScript Pong
 =======
 
 Classic game of Pong, made to learn JavaScript.
