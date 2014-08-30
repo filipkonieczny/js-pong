@@ -95,11 +95,13 @@ function Paddle(x, y, w, h, color) {
 }
 
 
-function Player(x, y, w, h) {
+function Player(x, y, w, h, move_left_key, move_right_key) {
 	this.x = x;
 	this.y = y;
 	this.w = w;
 	this.h = h;
+	this.move_left_key = move_left_key;
+	this.move_right_key = move_right_key;
 	this.paddle = new Paddle(this.x, this.y, this.w, this.h);
 
 
@@ -111,10 +113,10 @@ function Player(x, y, w, h) {
 		for (var key in keysDown) {
 		    var value = Number(key);
 		    // left arrow
-		    if (value == 37) {
+		    if (value == move_left_key) {
 		    	this.paddle.move(-4, 0);
 		    // right arrow
-		    } else if (value == 39) {
+		    } else if (value == move_right_key) {
 		    	this.paddle.move(4, 0);
 		    } else {
 		    	this.paddle.move(0, 0);
@@ -225,8 +227,8 @@ var detect_ball_player_collision = function(ball_obj, player_obj) {
 
 // create objects
 var board = new Board(WIDTH, HEIGHT)
-var player = new Player(175, 580, 100, 10);
-var computer = new Player(175, 10, 100, 10);
+var player1 = new Player(175, 580, 100, 10, 37, 39);
+var player2 = new Player(175, 10, 100, 10, 65, 68);
 var ball = new Ball(200, 300);
 ball.spawn();
 
@@ -245,15 +247,16 @@ var update = function() {
 	        keep_playing = true;
 	    }, 3000);
 	}
-	detect_ball_player_collision(ball, player);
-	detect_ball_player_collision(ball, computer);
-	player.update();
+	detect_ball_player_collision(ball, player1);
+	detect_ball_player_collision(ball, player2);
+	player1.update();
+	player2.update()
 }
 
 var render = function() {
 	board.render();
-	player.render();
-	computer.render();
+	player1.render();
+	player2.render();
 	ball.render();
 }
 
