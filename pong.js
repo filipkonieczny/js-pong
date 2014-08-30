@@ -148,7 +148,7 @@ function Ball(x, y, color) {
 		}
 
 		// right wall
-		if (this.x >= WIDTH) {
+		if (this.x + this.w >= WIDTH) {
 			this.x_speed *= -1;
 		}
 	}
