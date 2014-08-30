@@ -4,6 +4,7 @@ var HEIGHT = 600;
 var BOARD_COLOR = "#FF00FF";
 var PADDLE_COLOR = "#0000FF";
 var BALL_COLOR = "#000000";
+var MAX_BALL_SPEED = 6;
 
 
 // setup canvas
@@ -83,7 +84,7 @@ function Ball(x, y, color) {
 	this.y = y;
 	this.color = color;
 	this.x_speed = 0;
-	this.y_speed = 3;
+	this.y_speed = 0;
 	this.radius = 5;
 
 	// define default color value
@@ -91,6 +92,45 @@ function Ball(x, y, color) {
 		this.color = BALL_COLOR;
 	}
 
+
+	this.spawn = function() {
+		vertical_direction = Math.random()
+		if (vertical_direction >= 0.5) {
+			vertical_direction = 1;
+		}
+		else {
+			vertical_direction = -1;
+		}
+
+		horizontal_direction = Math.random()
+		if (horizontal_direction >= 0.5) {
+			horizontal_direction = 1;
+		}
+		else {
+			horizontal_direction = -1;
+		}
+
+		// determine the angle at which the ball is supposed to 
+		angle = (Math.random() * 8 + 2) / 10;
+
+		this.x_speed = angle * MAX_BALL_SPEED * horizontal_direction;
+		this.y_speed = Math.pow(Math.pow(MAX_BALL_SPEED, 2) - Math.pow(this.x_speed, 2), 1/2) * vertical_direction;
+
+
+		// LOG
+		console.log("x speed: %s", this.x_speed);
+		console.log("y speed: %s", this.y_speed);
+		total_speed = Math.abs(this.x_speed) + Math.abs(this.y_speed);
+		console.log("total speed: %s", total_speed);
+		actual_speed = Math.pow(Math.pow(this.x_speed, 2) + Math.pow(this.y_speed, 2), 1/2);
+		console.log("speed - max defined: %s, actual: %s", MAX_BALL_SPEED, actual_speed);
+	}
+
+
+	this.update = function() {
+		this.x += this.x_speed;
+		this.y += this.y_speed;
+	}
 
 	this.render = function() {
 		context.beginPath();
@@ -107,9 +147,13 @@ var player = new Player(175, 580, 50, 10);
 var computer = new Player(175, 10, 50, 10);
 var ball = new Ball(200, 300);
 
+ball.spawn();
+
 
 // main functions
-var update = function() {}
+var update = function() {
+	ball.update();
+}
 
 var render = function() {
 	board.render();
