@@ -43,7 +43,7 @@ function Board(w, h, color) {
 	this.color = color;
 
 	// define default color value
-	if (this.color === undefined) {
+	if (typeof(this.color) === "undefined") {
 		this.color = BOARD_COLOR;
 	}
 
@@ -65,7 +65,7 @@ function Paddle(x, y, w, h, color) {
 	this.y_speed = 0;
 
 	// define default color value
-	if (this.color === undefined) {
+	if (typeof(this.color) === "undefined") {
 		this.color = PADDLE_COLOR;
 	}
 
@@ -139,7 +139,7 @@ function Ball(x, y, color) {
 	this.diameter = this.radius * 2;
 
 	// define default color value
-	if (this.color === undefined) {
+	if (typeof(this.color) === "undefined") {
 		this.color = BALL_COLOR;
 	}
 
@@ -161,7 +161,7 @@ function Ball(x, y, color) {
 			horizontal_direction = -1;
 		}
 
-		// determine the angle at which the ball is supposed to 
+		// determine the angle at which the ball is supposed to
 		angle = (Math.random() * 8 + 2) / 10;
 
 		this.x_speed = angle * MAX_BALL_SPEED * horizontal_direction;
@@ -240,7 +240,7 @@ var update = function() {
 	ball.update();
 	if (detect_ball_exit(ball) && keep_playing) {
 		keep_playing = false;
-		setTimeout(function() { 
+		setTimeout(function() {
 	        delete ball;
 	        ball = new Ball(200, 300);
 	        ball.spawn();
